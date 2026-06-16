@@ -1,17 +1,12 @@
-import express from "express";
+// ============================================================
+// src/server.js — Point d'entrée serveur
+// ============================================================
+import config from "./config.js";
+import app from "./app.js";
 
-const app = express();
-
-app.get("/healthcheck", (req, res) => {
-
-    res.json({
-        status: "ok"
-    });
-
-});
-
-app.listen(3000, () => {
-
-    console.log("Serveur démarré");
-
+app.listen(config.port, config.host, () => {
+    console.log(`✅ Serveur démarré en mode [${config.env}]`);
+    console.log(
+        ` → http://${config.host === "0.0.0.0" ? "localhost" : config.host}:${config.port}`
+    );
 });
