@@ -15,17 +15,32 @@ export async function parseCsv(relativePath) {
             id: index + 1,
             ville: colonnes[0]?.trim() ?? '',
             date: colonnes[1]?.trim() ?? '',
-            temperature_min: Number(colonnes[2]?.trim()) ?? '',
-            temperature_max: Number(colonnes[3]?.trim()) ?? '',
+            temperatureMin: Number(colonnes[2]?.trim()) ?? '',
+            temperatureMax: Number(colonnes[3]?.trim()) ?? '',
             description: colonnes[4]?.trim() ?? '',
             humidite: Number(colonnes[5]?.trim()) ?? '',
         };
-    }).filter(data => {
-        return data.ville 
-        && data.date 
-        && data.temperature_min 
-        && data.temperature_max 
-        && data.description 
-        && data.humidite
-    });    
+    })   
+}
+
+export async function writeCsv(relativePath, releves) {
+    const chemin = resolve(__dirname, "..", relativePath);
+
+    const header =
+        "ville;date;temperature_min;temperature_max;description;humidite";
+
+    const lignes = releves.map(releve => {
+        return [
+            releve.ville,
+            releve.date,
+            releve.temperatureMin,
+            releve.temperatureMax,
+            releve.description,
+            releve.humidite
+        ].join(";");
+    });
+
+    const contenu = [header, ...lignes].join("\n");
+
+    await writeFile(chemin, contenu, "utf-8");
 }

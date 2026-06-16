@@ -2,9 +2,12 @@
 // app.js — Initialisation app
 // ============================================================
 import express from "express";
-import { parseCsv } from "./utils/csv.js";
+import relevesRoutes from "./routes/releves.routes.js";
+import { relevesRepository } from "./repositories/reveles.repository.js";
 
 const app = express();
+
+await relevesRepository.init();
 
 // ─── Middlewares ─────────────────────────────
 app.use(express.json());
@@ -14,17 +17,6 @@ app.use(express.json());
         res.json({ status: "ok" });
     });
 
-    app.get("/releves", async (req, res) => {
-        try {
-            const parsedCsv = await parseCsv("../data/meteo.csv");
-            console.log("check parsedCsv:", parsedCsv);
-
-            res.status(200).json(parsedCsv);
-        } catch (err) {
-            console.error("Erreur CSV:", err);
-            res.status(500).json({ error: "CSV import failed" });
-        }
-    });
-
+    app.use("/releves", relevesRoutes);
 
 export default app;
