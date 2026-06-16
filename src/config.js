@@ -12,4 +12,5 @@ export default {
     host: process.env.HOST || "0.0.0.0",
     env: process.env.NODE_ENV || "development",
     publicDir: join(__dirname, "..", "public"),
+    csvPath: join(__dirname, "..", "data/meteo.csv")
 };
