@@ -77,6 +77,36 @@ class ReleveRepository {
     }
 
     // ─────────────────────────────
+    // Modification
+    // ─────────────────────────────
+
+    /**
+     * Modifie un nouveau relevé et lui attribue un identifiant.
+     *
+     * @param {number} id id du relevé à modifier.
+     * @param {Releve} releve Relevé à enregistrer.
+     * @returns {Promise<Releve|undefined>}
+     */
+    async update(id, releveData) {
+
+        const index = this.releves.findIndex(
+            r => r.id === Number(id)
+        );
+
+        if (index === -1) {
+            return undefined;
+        }
+
+        releveData.id = Number(id);
+
+        this.releves[index] = releveData;
+
+        await writeCsv(this.csvPath, this.releves);
+
+        return releveData;
+    }
+
+    // ─────────────────────────────
     // Suppression
     // ─────────────────────────────
 
@@ -91,8 +121,6 @@ class ReleveRepository {
         releve = this.releves.find(releve =>
             releve.id === Number(id)
         );
-
-        console.log("repo: ", releve)
 
         this.releves = this.releves.filter(releve =>
             releve.id !== Number(id)
