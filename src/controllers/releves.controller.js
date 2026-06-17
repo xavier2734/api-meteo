@@ -75,6 +75,34 @@ export class ReleveController {
     };
 
     /**
+    * Modifie un relevé météorologique.
+    *
+    * @param {import("express").Request} req
+    * @param {import("express").Response} res
+    * @returns {Promise<void>}
+    */
+    putUnReleve = async (req, res) => {
+        try {
+            const releve = await this.service.putReleve(req.params.id, req.body);
+
+            if (!releve) {
+                return res.status(404).json({
+                    error: "Relevé introuvable"
+                });
+            }
+
+            res.status(201).json(releve);
+
+        } catch (error) {
+            console.error("error on post:", error.message);
+
+            res.status(400).json({
+                error: error.message
+            });
+        }
+    };
+
+    /**
      * Supprime un relevé à partir de son identifiant.
      *
      * @param {import("express").Request} req

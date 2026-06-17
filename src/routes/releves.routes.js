@@ -76,6 +76,46 @@ router.post("/", controller.postUnReleve);
 /**
  * @openapi
  * /releves/{id}:
+ *   put:
+ *     summary: Modifie un relevé météo
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ville:
+ *                 type: string
+ *               date:
+ *                 type: string
+ *               temperatureMin:
+ *                 type: number
+ *               temperatureMax:
+ *                 type: number
+ *               description:
+ *                 type: string
+ *               humidite:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: Relevé modifié
+ *       400:
+ *         description: Données invalides
+ *       404:
+ *         description: Relevé introuvable
+ */
+router.put("/:id", controller.putUnReleve);
+
+/**
+ * @openapi
+ * /releves/{id}:
  *   delete:
  *     summary: Supprime un relevé
  *     parameters:
