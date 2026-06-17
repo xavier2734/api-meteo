@@ -108,8 +108,16 @@ class Releve {
             erreurs.push("La ville est obligatoire");
         }
 
+        if (typeof this.#ville !== String) {
+            erreurs.push("La ville doit être une chaîne de caractères.");
+        }
+
         if (!this.#date) {
             erreurs.push("La date est obligatoire");
+        }
+
+        if (typeof this.#date !== String) {
+            erreurs.push("La date doit être une chaîne de caractères.");
         }
 
         if (!this.#temperatureMin) {
@@ -129,7 +137,11 @@ class Releve {
         }
 
         if (!this.#description) {
-            erreurs.push("La desc#description est obligatoire");
+            erreurs.push("La description est obligatoire");
+        }
+
+        if (typeof this.#description !== String) {
+            erreurs.push("La description doit être une chaîne de caractères.");
         }
 
         if (!this.#humidite) {
