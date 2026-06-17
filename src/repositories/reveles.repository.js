@@ -92,8 +92,6 @@ class ReleveRepository {
             releve.id === Number(id)
         );
 
-        console.log("repo: ", releve)
-
         this.releves = this.releves.filter(releve =>
             releve.id !== Number(id)
         );
