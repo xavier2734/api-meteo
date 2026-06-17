@@ -61,6 +61,30 @@ export class ReleveService {
     }
 
     /**
+     * Valide puis modifie un relevé.
+     *
+     * @param {number} id id du relevé.
+     * @param {Object} data Données du relevé.
+     * @returns {Promise<Releve>}
+     * @throws {Error} Si les données sont invalides.
+     */
+    async putReleve(id, data) {
+
+        const releve = new Releve({
+            id: Number(id),
+            ...data
+        });
+
+        const erreurs = releve.valider();
+
+        if (erreurs.length > 0) {
+            throw new Error(erreurs.join(", "));
+        }
+
+        return await this.repository.update(id, releve);
+    }
+
+    /**
      * Supprime un relevé par son identifiant.
      *
      * @param {number} id Identifiant du relevé.

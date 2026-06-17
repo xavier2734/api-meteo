@@ -3,9 +3,11 @@
 // ============================================================
 import express from "express";
 import relevesRoutes from "./routes/releves.routes.js";
+import villesRoutes from "./routes/villes.routes.js";
 import { relevesRepository } from "./repositories/reveles.repository.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import statsRoutes from "./routes/stats.routes.js";
 
 /**
  * Application Express.
@@ -34,5 +36,7 @@ app.get("/healthcheck", (req, res) => {
 });
 
 app.use("/releves", relevesRoutes);
+app.use("/stats", statsRoutes);
+app.use("/villes", villesRoutes);
 
 export default app;
