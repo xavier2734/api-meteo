@@ -4,17 +4,9 @@ export class VilleController {
     }
 
     listerVilles = async (req, res) => {
-        try {
-            const villes =
-                await this.service.getToutesLesVilles();
+        const villes = await this.service.getToutesLesVilles();
 
-            res.status(200).json(villes);
-
-        } catch (error) {
-            res.status(500).json({
-                error: error.message
-            });
-        }
+        res.status(200).json(villes);
     };
 }
 
