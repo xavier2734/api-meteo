@@ -18,13 +18,9 @@ export class ReleveController {
      * @returns {Promise<void>}
      */
     listerReleves = async (req, res) => {
-        try {
-            const releves = await this.service.getTousLesReleves();
-            res.status(200).json(releves);
-        } catch (error) {
-            console.error("error on get all:", error.message);
-            res.status(500).json({ error: error.message });
-        }
+        const releves = await this.service.getTousLesReleves();
+
+        res.status(200).json(releves);
     };
 
     /**
@@ -35,21 +31,15 @@ export class ReleveController {
      * @returns {Promise<void>}
      */
     getUnReleve = async (req, res) => {
-        try {
-            const releve = await this.service.getReleveParId(req.params.id);
+        const releve = await this.service.getReleveParId(req.params.id);
 
-            if (!releve) {
-                return res.status(404).json({
-                    error: "Relevé introuvable"
-                });
-            }
-
-            res.status(200).json(releve);
-
-        } catch (error) {
-            console.error("error on get one releve:", error.message);
-            res.status(500).json({ error: error.message });
+        if (!releve) {
+            return res.status(404).json({
+                error: "Relevé introuvable"
+            });
         }
+
+        res.status(200).json(releve);
     };
 
     /**
@@ -60,18 +50,9 @@ export class ReleveController {
      * @returns {Promise<void>}
      */
     postUnReleve = async (req, res) => {
-        try {
-            const releve = await this.service.postReleve(req.body);
+        const releve = await this.service.postReleve(req.body);
 
-            res.status(201).json(releve);
-
-        } catch (error) {
-            console.error("error on post:", error.message);
-
-            res.status(400).json({
-                error: error.message
-            });
-        }
+        res.status(201).json(releve);
     };
 
     /**
@@ -82,24 +63,15 @@ export class ReleveController {
     * @returns {Promise<void>}
     */
     putUnReleve = async (req, res) => {
-        try {
-            const releve = await this.service.putReleve(req.params.id, req.body);
+        const releve = await this.service.putReleve(req.params.id, req.body);
 
-            if (!releve) {
-                return res.status(404).json({
-                    error: "Relevé introuvable"
-                });
-            }
-
-            res.status(201).json(releve);
-
-        } catch (error) {
-            console.error("error on post:", error.message);
-
-            res.status(400).json({
-                error: error.message
+        if (!releve) {
+            return res.status(404).json({
+                error: "Relevé introuvable"
             });
         }
+
+        res.status(201).json(releve);
     };
 
     /**
@@ -110,7 +82,6 @@ export class ReleveController {
      * @returns {Promise<void>}
      */
     deleteUnReleve = async (req, res) => {
-        try {
             const releveSupprime = await this.service.deleteReleveParId(req.params.id);
 
             if (!releveSupprime) {
@@ -120,11 +91,6 @@ export class ReleveController {
             }
 
             res.status(204).send();
-
-        } catch (error) {
-            console.error("error on delete one releve:", error.message);
-            res.status(500).json({ error: error.message });
-        }
     };
 }
 
