@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: routes/villes.routes.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,39 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: routes/villes.routes.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Router } from "express";
+import { villeController as controller } from "../controllers/villes.controller.js";
 
+/**
+ * Routes HTTP associées aux villes.
+ *
+ * GET /villes
+ */
+const router = Router();
 
-    <h3> </h3>
+/**
+ * @openapi
+ * /villes:
+ *   get:
+ *     summary: Liste les villes distinctes avec leurs statistiques
+ *     responses:
+ *       200:
+ *         description: Liste des villes et agrégats calculés
+ */
+router.get("/", controller.listerVilles);
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default router;</code></pre>
+        </article>
+    </section>
 
 
 
