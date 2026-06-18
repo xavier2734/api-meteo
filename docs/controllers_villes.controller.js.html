@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: controllers/villes.controller.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,55 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: controllers/villes.controller.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Contrôleur des villes.
+ * Reçoit les requêtes HTTP et délègue le traitement au service.
+ */
+export class VilleController {
 
+    /**
+     * @param {import("../services/villes.service.js").VilleService} service
+     */
+    constructor(service) {
+        this.service = service;
+    }
 
-    <h3> </h3>
+    /**
+     * Retourne la liste des villes avec leurs statistiques.
+     *
+     * @param {import("express").Request} req
+     * @param {import("express").Response} res
+     * @returns {Promise&lt;void>}
+     */
+    listerVilles = async (req, res) => {
+        try {
+            const villes = await this.service.getToutesLesVilles();
 
+            res.status(200).json(villes);
 
+        } catch (error) {
+            console.error("error on get villes:", error.message);
 
+            res.status(500).json({
+                error: error.message
+            });
+        }
+    };
+}
 
-
-
-
-
-
-
-    
-
-
-
-
-
+import { villeService } from "../services/villes.service.js";
+export const villeController = new VilleController(villeService);</code></pre>
+        </article>
+    </section>
 
 
 
