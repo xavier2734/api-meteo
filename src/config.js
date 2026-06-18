@@ -3,6 +3,7 @@
 // ============================================================
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,6 +12,5 @@ export default {
     port: parseInt(process.env.PORT || "3000", 10),
     host: process.env.HOST || "0.0.0.0",
     env: process.env.NODE_ENV || "development",
-    publicDir: join(__dirname, "..", "public"),
-    csvPath: join(__dirname, "..", "data/meteo.csv")
+    csvPath: join(__dirname, "..", `${process.env.CSVPATH}`)
 };

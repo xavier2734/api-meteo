@@ -1,3 +1,5 @@
+import { relevesRepository } from "../repositories/reveles.repository.js";
+
 /**
  * Contrôleur des relevés météorologiques.
  * Reçoit les requêtes HTTP et délègue le traitement au service.
