@@ -136,6 +136,10 @@ class Releve {
             erreurs.push("temperatureMax invalide");
         }
 
+        if (this.#temperatureMax < this.#temperatureMin) {
+            erreurs.push("La temperature maximale ne doit pas être inférieure à la température minimale");
+        }
+
         if (!this.#description) {
             erreurs.push("La description est obligatoire");
         }
@@ -145,11 +149,15 @@ class Releve {
         }
 
         if (!this.#humidite) {
-            erreurs.push("L'humidite est obligatoire");
+            erreurs.push("L'humidité est obligatoire");
         }
 
         if (Number.isNaN(this.#humidite)) {
-            erreurs.push("humidite invalide");
+            erreurs.push("Humidité invalide");
+        }
+
+        if (this.#humidite > 100 || this.#humidite < 0) {
+            erreurs.push("L'humidité doit être entre 0 et 100");
         }
 
         return erreurs;
