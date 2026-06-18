@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: routes/stats.routes.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,39 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: routes/stats.routes.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Router } from "express";
+import { statsController } from "../controllers/stats.controller.js";
 
+/**
+ * Routes HTTP associées aux statistiques météo.
+ *
+ * GET /stats
+ */
+const router = Router();
 
-    <h3> </h3>
+/**
+ * @openapi
+ * /stats:
+ *   get:
+ *     summary: Retourne les statistiques globales
+ *     responses:
+ *       200:
+ *         description: Statistiques calculées à partir des relevés
+ */
+router.get("/", statsController.getStats);
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default router;</code></pre>
+        </article>
+    </section>
 
 
 

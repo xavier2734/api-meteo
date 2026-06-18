@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: controllers/stats.controller.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,43 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: controllers/stats.controller.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Contrôleur des statistiques météo.
+ * Reçoit les requêtes HTTP et délègue le traitement au service.
+ */
+export class StatsController {
 
+    /**
+     * @param {import("../services/stats.service.js").StatsService} service
+     */
+    constructor(service) {
+        this.service = service;
+    }
 
-    <h3> </h3>
+    /**
+     * Retourne les statistiques globales.
+     *
+     * @param {import("express").Request} req
+     * @param {import("express").Response} res
+     * @returns {Promise&lt;void>}
+     */
+    getStats = async (req, res) => {
+        const stats = await this.service.getStats();
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+        res.status(200).json(stats);
+    };
+}</code></pre>
+        </article>
+    </section>
 
 
 

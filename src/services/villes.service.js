@@ -1,14 +1,28 @@
+/**
+ * Couche métier des villes.
+ */
 export class VilleService {
+
+    /**
+     * @param {Object} repository Repository des relevés.
+     */
     constructor(repository) {
         this.repository = repository;
     }
 
+    /**
+     * Retourne la liste des villes distinctes avec leurs statistiques.
+     *
+     * @returns {Promise<Array>}
+     */
     async getToutesLesVilles() {
         const releves = await this.repository.findAll();
 
-        const villes = [...new Set(
-            releves.map(r => r.ville)
-        )];
+        const villes = [
+            ...new Set(
+                releves.map(r => r.ville)
+            )
+        ];
 
         return villes.map(ville => {
 
