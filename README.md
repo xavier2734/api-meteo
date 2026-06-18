@@ -95,10 +95,11 @@ cd meteo-api
 
 Dans un .env à la racine, ajouter les variables suivantes:
 ```bash
-PORT = 3000
-HOST = 0.0.0.0
-NODE_ENV = development
-CSVPATH = data/meteo.csv
+API_URL=http://localhost:3000
+PORT=3000
+HOST=0.0.0.0
+NODE_ENV=development
+CSVPATH=data/meteo.csv
 ```
 
 
@@ -120,9 +121,16 @@ Le serveur démarre par défaut sur :
 http://localhost:3000
 ```
 
+### Lancer le CLI
+
+```bash
+cd meteo-CLI && npm run dev
+```
+
+
 ---
 
-## Endpoints
+## Endpoints API
 
 ### Healthcheck
 

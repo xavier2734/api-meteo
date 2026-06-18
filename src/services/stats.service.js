@@ -49,7 +49,7 @@ export class StatsService {
             0
         );
 
-        return somme / releves.length;
+        return (somme / releves.length).toFixed(1);
     }
 
     /**
@@ -65,7 +65,7 @@ export class StatsService {
             0
         );
 
-        return somme / releves.length;
+        return (somme / releves.length).toFixed(1);
     }
 
     /**

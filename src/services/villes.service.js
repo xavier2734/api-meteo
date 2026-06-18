@@ -30,16 +30,16 @@ export class VilleService {
                 releves.filter(r => r.ville === ville);
 
             const temperatureMinMoyenne =
-                relevesVille.reduce(
+                (relevesVille.reduce(
                     (sum, r) => sum + r.temperatureMin,
                     0
-                ) / relevesVille.length;
+                ) / relevesVille.length).toFixed(1);
 
             const temperatureMaxMoyenne =
-                relevesVille.reduce(
+                (relevesVille.reduce(
                     (sum, r) => sum + r.temperatureMax,
                     0
-                ) / relevesVille.length;
+                ) / relevesVille.length).toFixed(1);
 
             return {
                 ville,
@@ -48,6 +48,19 @@ export class VilleService {
                 temperatureMaxMoyenne
             };
         });
+    }
+
+    /**
+     * Retourne la ville distincte avec ses statistiques.
+     *
+     * @returns {Promise<Object|undefined>}
+     */
+    async getLaVille(ville) {
+        const villes = (await this.getToutesLesVilles());
+        
+        const filtered = villes.filter((element) => element.ville === ville);
+        
+        return filtered[0] ?? undefined;
     }
 }
 

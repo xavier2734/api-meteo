@@ -19,18 +19,29 @@ export class VilleController {
      * @returns {Promise<void>}
      */
     listerVilles = async (req, res) => {
-        try {
-            const villes = await this.service.getToutesLesVilles();
+        const villes = await this.service.getToutesLesVilles();
 
-            res.status(200).json(villes);
+        res.status(200).json(villes);
+    };
 
-        } catch (error) {
-            console.error("error on get villes:", error.message);
+    /**
+     * Retourne la ville avec ses statistiques.
+     *
+     * @param {import("express").Request} req
+     * @param {import("express").Response} res
+     * @returns {Promise<void>}
+     */
+    afficherVille = async (req, res) => {
+        const name = req.params.ville;
+        const ville = await this.service.getLaVille(name);
 
-            res.status(500).json({
-                error: error.message
+        if (!ville) {
+            return res.status(404).json({
+                error: "Ville introuvable"
             });
         }
+
+        res.status(200).json(ville);
     };
 }
 
