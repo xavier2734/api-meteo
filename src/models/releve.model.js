@@ -108,7 +108,8 @@ class Releve {
             erreurs.push("La ville est obligatoire");
         }
 
-        if (typeof this.#ville !== String) {
+        if (typeof this.#ville !== "string") {
+            console.log("check: ", typeof this.#ville, this.#ville)
             erreurs.push("La ville doit être une chaîne de caractères.");
         }
 
@@ -116,7 +117,7 @@ class Releve {
             erreurs.push("La date est obligatoire");
         }
 
-        if (typeof this.#date !== String) {
+        if (typeof this.#date !== "string") {
             erreurs.push("La date doit être une chaîne de caractères.");
         }
 
@@ -144,7 +145,7 @@ class Releve {
             erreurs.push("La description est obligatoire");
         }
 
-        if (typeof this.#description !== String) {
+        if (typeof this.#description !== "string") {
             erreurs.push("La description doit être une chaîne de caractères.");
         }
 

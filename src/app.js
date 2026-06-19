@@ -17,7 +17,6 @@ import { gestionErreurs } from "./middlewares/error.js";
  * Configure :
  * - les middlewares
  * - les routes
- * - l'initialisation du repository
  */
 const app = express();
 
@@ -26,8 +25,6 @@ const spec = swaggerJsdoc({
     apis: ["./src/routes/*.js"], // fichiers où chercher les annotations
 });
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec));
-
-await relevesRepository.init();
 
 // ─── Middlewares ─────────────────────────────
 app.use(express.json());

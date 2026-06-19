@@ -1,28 +1,21 @@
-import { parseCsv, writeCsv } from "../utils/csv.js";
-import config from "../config.js";
+import mysql from 'mysql2/promise';
+
+const pool = mysql.createPool({
+    host:
+        process.env.DB_HOST,
+    user:
+        process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+});
 
 /**
  * Repository chargé de l'accès aux données des relevés.
  * Gère le chargement, la recherche, l'ajout et la suppression.
  */
 class ReleveRepository {
-    /**
-     * @param {string} csvPath Chemin du fichier CSV.
-     */
-    constructor(csvPath) {
-        this.csvPath = csvPath;
-        this.releves = [];
-    }
-
-    /**
-     * Charge les relevés en mémoire depuis le CSV.
-     *
-     * @returns {Promise<void>}
-     */
-    async init() {
-        this.releves = await parseCsv(this.csvPath);
-    }
-
     // ─────────────────────────────
     // Tous les relevés
     // ─────────────────────────────
@@ -33,7 +26,8 @@ class ReleveRepository {
      * @returns {Promise<Array>}
      */
     async findAll() {
-        return this.releves;
+        const [rows] = await pool.execute('SELECT * FROM releves ORDER BY id');
+        return rows;
     }
 
     // ─────────────────────────────
@@ -47,9 +41,8 @@ class ReleveRepository {
      * @returns {Promise<Object|undefined>}
      */
     async findById(id) {
-        return this.releves.find(releve =>
-            releve.id === Number(id)
-        );
+        const [rows] = await pool.execute('SELECT * FROM releves WHERE id = ?', [id]);
+        return rows[0] ?? null;
     }
 
     // ─────────────────────────────
@@ -63,17 +56,18 @@ class ReleveRepository {
      * @returns {Promise<Releve>}
      */
     async save(releve) {
-        const maxId = this.releves.length > 0
-            ? Math.max(...this.releves.map(r => r.id))
-            : 0;
-
-        releve.id = maxId + 1;
-
-        this.releves.push(releve);
-
-        await writeCsv(this.csvPath, this.releves);
-
-        return releve;
+        const [result] = await pool.execute(
+            'INSERT INTO releves (ville, date, temperatureMin, temperatureMax, description, humidite) VALUES (?, ?, ?, ?, ?, ?)',
+            [
+                releve.ville,
+                releve.date,
+                parseInt(releve.temperatureMin),
+                parseInt(releve.temperatureMax),
+                releve.description,
+                parseInt(releve.humidite),
+            ]
+        );
+        return result.insertId;
     }
 
     // ─────────────────────────────
@@ -88,22 +82,19 @@ class ReleveRepository {
      * @returns {Promise<Releve|undefined>}
      */
     async update(id, releveData) {
-
-        const index = this.releves.findIndex(
-            r => r.id === Number(id)
+        const [result] = await pool.execute(
+            'UPDATE releves SET ville = ?, date = ?, temperatureMin = ?, temperatureMax = ?, description = ?, humidite = ? WHERE id = ?',
+            [
+                releveData.ville,
+                releveData.date,
+                parseInt(releveData.temperatureMin),
+                parseInt(releveData.temperatureMax),
+                releveData.description,
+                parseInt(releveData.humidite),
+                id
+            ]
         );
-
-        if (index === -1) {
-            return undefined;
-        }
-
-        releveData.id = Number(id);
-
-        this.releves[index] = releveData;
-
-        await writeCsv(this.csvPath, this.releves);
-
-        return releveData;
+        return result.affectedRows > 0;
     }
 
     // ─────────────────────────────
@@ -117,21 +108,11 @@ class ReleveRepository {
      * @returns {Promise<Object|undefined>} Relevé supprimé.
      */
     async deleteById(id) {
-        let releve;
-        releve = this.releves.find(releve =>
-            releve.id === Number(id)
-        );
-
-        this.releves = this.releves.filter(releve =>
-            releve.id !== Number(id)
-        );
-
-        await writeCsv(this.csvPath, this.releves);
-
-        return releve
+        const [result] = await pool.execute('DELETE FROM releves WHERE id = ?', [id]);
+        return result.affectedRows > 0;
     }
 }
 
 
 // on exporte une instance prête à l'emploi (les services l'importent)
-export const relevesRepository = new ReleveRepository(config.csvPath);
+export const relevesRepository = new ReleveRepository();

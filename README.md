@@ -100,13 +100,48 @@ PORT=3000
 HOST=0.0.0.0
 NODE_ENV=development
 CSVPATH=data/meteo.csv
+DB_HOST=localhost
+DB_USER=admin
+DB_PASSWORD=azerty
+DB_NAME=meteo_db
 ```
-
 
 ### Installer les dépendances
 
 ```bash
 npm install
+```
+
+### Initialiser la base de donner
+
+Se connecter à mysql et créer la base de donnée:
+```bash
+CREATE DATABASE IF NOT EXISTS meteo_db;
+```
+
+Rentrer dans la base de donnée:
+```bash
+USE meteo_db;
+```
+
+Créer la table releves:
+```bash
+CREATE TABLE releves (
+  id INT(11)
+  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  ville VARCHAR(100) NOT NULL,
+  date DATE NOT NULL,
+  temperatureMin DECIMAL(4) NOT NULL,
+  temperatureMax DECIMAL(4) NOT NULL,
+  description VARCHAR(100) NOT NULL,
+  humidite DECIMAL(4) NOT NULL
+);
+```
+
+### Lancer le script d'import csv -> database
+
+```bash
+node data/db-import.js
 ```
 
 ### Lancer le serveur
@@ -126,7 +161,6 @@ http://localhost:3000
 ```bash
 cd meteo-CLI && npm run dev
 ```
-
 
 ---
 
