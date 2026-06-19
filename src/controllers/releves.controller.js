@@ -55,8 +55,6 @@ export class ReleveController {
         const releve = await this.service.postReleve(req.body);
 
         res.status(201).json(releve);
-
-        await relevesRepository.init();
     };
 
     /**
@@ -76,8 +74,6 @@ export class ReleveController {
         }
 
         res.status(201).json(releve);
-
-        await relevesRepository.init();
     };
 
     /**
@@ -97,8 +93,6 @@ export class ReleveController {
             }
 
             res.status(204).send();
-
-            await relevesRepository.init();
     };
 }
 
